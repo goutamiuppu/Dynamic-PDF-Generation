@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 20px;
+            font-size: 14px;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .main-table td, .main-table th {
+            border: 1px solid black;
+            padding: 15px;
+            vertical-align: top;
+        }
+        .details-cell {
+            width: 50%;
+            padding: 15px;
+        }
+        .header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .address {
+            margin: 5px 0;
+        }
+        .gstin {
+            margin-top: 5px;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: -1px;
+        }
+        .items-table th, .items-table td {
+            border: 1px solid black;
+            padding: 8px 15px;
+            text-align: left;
+        }
+        .items-table th {
+            font-weight: normal;
+        }
+        .main-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<table class="main-table">
+    <tr>
+        <td class="details-cell">
+            <div class="header">Seller:</div>
+            <div class="company" th:text="${document.seller}"></div>
+            <div class="address" th:text="${document.sellerAddress}"></div>
+            <div class="gstin">GSTIN: <span th:text="${document.sellerGstin}"></span></div>
+        </td>
+        <td class="details-cell">
+            <div class="header">Buyer:</div>
+            <div class="company" th:text="${document.buyer}"></div>
+            <div class="address" th:text="${document.buyerAddress}"></div>
+            <div class="gstin">GSTIN: <span th:text="${document.buyerGstin}"></span></div>
+        </td>
+    </tr>
+</table>
+<table class="items-table">
+    <thead>
+    <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${document.items}">
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td th:text="${#numbers.formatDecimal(item.rate, 1, 2)}"></td>
+        <td th:text="${#numbers.formatDecimal(item.amount, 1, 2)}"></td>
+    </tr>
+    <tr>
+        <td colspan="4" style="height: 100px; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
